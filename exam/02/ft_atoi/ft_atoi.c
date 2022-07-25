@@ -1,31 +1,26 @@
 int	ft_atoi(const char *str)
 { 
-	int ret;
-	int count = 1;
-	char temp[10];
-	int i = 0;
-	while(*str)
-	{
-		temp[i] = *str;
+	int	ret;
+	int	sign;
+
+	ret = 0;
+	sign = 1;
+
+	while(*str != 0 && (*str <= 32)
 		str++;
-		if(temp[i] >=48 && temp[i] <=57)
-			i++;
-		else
-			break;
-	}
-	i--;
-	while(i != -1)
+
+	if(*str == '-' || *str == '+')
 	{
-		if(temp[i] >=48 && temp[i] <=57)
-		{
-			ret += (temp[i] -48)*count;
-			count *= 10;
-		}
-		else
-			return ret;	
-		i--;
+		if(*str == '-')
+			sign = -1;
+		str++;
 	}
-	return ret;
+	while(*str >= '0' && *str <= '9')
+	{
+		ret = ret * 10 + (*str - '0');
+		str++;
+	}
+	return (ret * sign);
 }
 
 #include <stdio.h>
