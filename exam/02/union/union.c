@@ -1,8 +1,10 @@
 #include <unistd.h>
 
-int	is_in(char *str, char ch)
+int	is_in(char *str, int len, char ch)
 {
-	while(*str++)
+	int	i;
+	i = -1;
+	while(i++ < len)
 	{
 		if(*str == ch)
 			return 1;
@@ -10,37 +12,35 @@ int	is_in(char *str, char ch)
 	return 0;
 }
 
+void	ft_union(char *str1, char *str2)
+{
+	int	i;
+	int	j;
+	char	ch;
+	i = 0;
+	j = 0;
+	while(str1[i])
+	{
+		ch = str1[i];
+		write(1,&ch,1);
+		i++;
+	}
+
+	while(str2[j])
+	{
+		if(!is_in(str1,i,str2[j]) && !is_in(str2,j,str2[j]))
+		{
+			ch = str2[j];
+			write(1,&ch,1);
+		}
+		j++;
+	}
+}
+
 int main(int argc, char **argv) 
 {
-	char ret[30] = {0,};
-	int i = 0;
-	int j = 0;
-	int flag = 0;
-	if(argc != 3)
-	{
-		write(1,"\n",1);
-		return 0;
-	}
-	while(*argv[1])
-	{
-		while(argv[2][i])
-		{
-			if(*argv[1] == argv[2][i])
-			{
-				flag = 1;
-				break;
-			}
-			i++;
-		}
-		argv[1]++;
-		if(!flag && !is_in(ret,argv[2][i]))
-		{
-			ret[j] = argv[2][i];
-			j++;
-			write(1,argv[2][i],1);	
-		}
-		i = 0;
-		flag = 0;
-	}
+	if(argc == 3)
+		ft_union(argv[1],argv[2]);
+	write(1,"\n",1);
 	return 0;
 }
