@@ -1,13 +1,8 @@
 #include <unistd.h>
 
-void	ft_write(char *ch)
+void	ft_write(char ch)
 {
-	int	len;
-
-	len = 0;
-	while (ch[len])
-		len++;
-	write(1,ch,len);
+	write(1,&ch,1);
 }
 
 int	ft_atoi(char *ch)
@@ -30,29 +25,11 @@ int	ft_atoi(char *ch)
 	return ret;
 }
 
-char	*ft_itoa(int input)
+void	putnbr(int input)
 {
-	if (!ret)
-		static char	ret[5] = {0,0,0,0,0};
-	else
-		ret = {0,0,0,0,0};
-	int		i;
-	int		digit;
-
-	digit = 10;
-	i = 0;
-	while (input >= digit)
-	{
-		digit *= 10;
-		i++;
-	}
-	while (input != 0)
-	{
-		ret[i] = input % 10 + '0';
-		input /= 10;
-		i--;
-	}
-	return ret;
+	if (input > 9)
+		putnbr(input / 9);
+	ft_write(input % 10 + '0');
 }
 
 void	print_mult(int input)
@@ -64,12 +41,12 @@ void	print_mult(int input)
 	while (i != 10)
 	{
 		a = i + '0';
-		write(1,&a,1);
-		ft_write(" x ");
-		ft_write(ft_itoa(input));
-		ft_write(" = ");
-		ft_write(ft_itoa(input*i));
-		ft_write("\n");
+		ft_write(a);
+		write(1," x ",3);
+		putnbr(input);
+		write(1," = ",3);
+		putnbr(input*i);
+		ft_write('\n');
 		i++;
 	}
 }
@@ -77,8 +54,8 @@ void	print_mult(int input)
 int	main(int argc, char **argv) 
 {
 	if (argc == 2)
-	{
 		print_mult(ft_atoi(argv[1]));
-	}
+	else
+		write(1,"\n",1);
 	return 0;
 }
