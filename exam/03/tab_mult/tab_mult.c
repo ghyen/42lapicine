@@ -28,7 +28,7 @@ int	ft_atoi(char *ch)
 void	putnbr(int input)
 {
 	if (input > 9)
-		putnbr(input / 9);
+		putnbr(input / 10);
 	ft_write(input % 10 + '0');
 }
 
