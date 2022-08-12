@@ -3,18 +3,26 @@
 
 void	ft_list_remove_if(t_list **begin_list, void *data_ref, int (*cmp)())
 {
-	if (begin_list == NULL || *begin_list == NULL)
-		return;
-
-	t_list	*tmp = *begin_list;
-	if (!cmp(data_ref, tmp->data))
+	t_list	*tmp;
+	t_list	*i;
+	while (cmp((*begin_list)->data,data_ref) == 0)
 	{
-		*begin_list = tmp->next;
+		tmp = *begin_list;
+		*begin_list = (*begin_list)->next;
 		free(tmp);
-		ft_list_remove_if(begin_list, data_ref, cmp);
 	}
-	tmp = *begin_list;
-	ft_list_remove_if(&tmp->next, data_ref, cmp);
+	tmp = (*begin_list)->next;
+	i = *begin_list;
+	while (tmp != NULL)
+	{
+		if (cmp(tmp->data,data_ref) == 0)
+		{
+			i->next = tmp->next;
+			free(tmp);
+		}
+		i = (*begin_list)->next;
+		tmp = i->next;
+	}
 }
 
 #include <stdio.h>
