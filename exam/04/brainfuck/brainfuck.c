@@ -1,14 +1,10 @@
 #include <unistd.h>
 
-void	go_to_the_matching()
-{
-	
-}
-
 void	brain(char *input)
 {
 	int	pointer;
 	char	bytes[2048] = {0,};
+	int	loop;
 	while (*input)
 	{
 		if (*input == '>')
@@ -20,15 +16,26 @@ void	brain(char *input)
 		else if (*input == '-')
 			bytes[pointer]--;
 		else if (*input == '.')
-			write(1,bytes[pointer],1);
-		else if (*input == '[')
+			write(1,&bytes[pointer],1);
+		else if (*input == '[' && !*input)
 		{
-
-
+			loop = 1;
+			while (loop)
+			{
+				input++;
+				*input == '[' ? loop++ : loop;
+				*input == ']' ? loop-- : loop;
+			}
 		}
-		else if (*input == ']')
+		else if (*input == ']' && *input)
 		{
-
+			loop= = 1;
+			while (loop)
+			{
+				input--;
+				*input == '[' ? loop-- : loop;
+				*input == ']' ? loop++ : loop;
+			}
 		}
 		input++;
 	}
